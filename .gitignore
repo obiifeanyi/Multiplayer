@@ -1,0 +1,6 @@
+Intermediate/*
+Saved/*
+Binaries/*
+.vs/*
+**/Content/*
+!**/Content/Simon
