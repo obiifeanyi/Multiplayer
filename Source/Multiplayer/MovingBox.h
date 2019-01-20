@@ -22,6 +22,9 @@ private:
 	AMovingBox ();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+	//
+	void PlatformMovenment(float DeltaSeconds);
+
 
 	//Variable
 	FVector	GlobalStartLocation;
@@ -32,7 +35,12 @@ private:
 	float Speed = 100.0f;
 	UPROPERTY(EditAnywhere, meta = (MakeEditWidget = true))
 	FVector TargetLocation;
+	UPROPERTY(EditAnywhere)
+	int32 NumberActiveTrigger = 1;
 
+public:
+	void AddToActiveTrigger();
+	void RemoveFromActiveTrigger();
 	
 	
 };

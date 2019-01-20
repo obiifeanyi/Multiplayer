@@ -29,6 +29,14 @@ void AMovingBox::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	if (NumberActiveTrigger > 0)
+	{
+	PlatformMovenment(DeltaSeconds);
+	}
+}
+
+void AMovingBox::PlatformMovenment(float DeltaSeconds)
+{
 //Moving the box
 	FVector Location = GetActorLocation();
 	// switching th start and target location based on vector magnitude to target		//magnitude of distance
@@ -47,3 +55,14 @@ void AMovingBox::Tick(float DeltaSeconds)
 	SetActorLocation(Location);
 }
 
+void AMovingBox::AddToActiveTrigger()
+{
+	NumberActiveTrigger++;
+}
+void AMovingBox::RemoveFromActiveTrigger()
+{
+	if (NumberActiveTrigger > 0)
+	{
+		NumberActiveTrigger--;
+	}
+}

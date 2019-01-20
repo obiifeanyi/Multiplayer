@@ -17,18 +17,24 @@ class MULTIPLAYER_API APlatformTrigger : public AActor
 public:
 	// Sets default values for this actor's properties
 	APlatformTrigger();
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	//
+	UPROPERTY(VisibleAnywhere)
+	class UBoxComponent* TriggerVolume = nullptr;
 	UPROPERTY(EditAnywhere)
-	class UBoxComponent* TriggerVolume;
+	TArray<class AMovingBox*> MovingPlatforms;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	
-	
+ 	UFUNCTION()
+ 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 };
