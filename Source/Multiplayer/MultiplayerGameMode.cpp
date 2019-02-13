@@ -2,6 +2,7 @@
 
 #include "MultiplayerGameMode.h"
 #include "MultiplayerCharacter.h"
+#include "MenuSystem/MenuInterface.h"
 #include "UObject/ConstructorHelpers.h"
 
 AMultiplayerGameMode::AMultiplayerGameMode()

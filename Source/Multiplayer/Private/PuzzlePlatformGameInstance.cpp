@@ -2,35 +2,37 @@
 
 #include "PuzzlePlatformGameInstance.h"
 #include "Public/Blueprint/UserWidget.h"
+#include "MenuSystem/MainMenu.h"
 #include <Engine/Engine.h>
 
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
 {
 	
-	static ConstructorHelpers::FClassFinder<UUserWidget> MainMenu (TEXT("/Game/Simon/MainMenu/WBP_MainMenu"));
+	static ConstructorHelpers::FClassFinder<UMainMenu> MainMenu (TEXT("/Game/Simon/MainMenu/WBP_MainMenu"));
 	if (MainMenu.Class != NULL)
 	{
 		MainMenuBP = MainMenu.Class;
-		UE_LOG(LogTemp, Warning, TEXT("UI_Widget is %s"),*MainMenuBP->GetName());
 	}
+
 }
 
 void UPuzzlePlatformGameInstance::Init()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Initializer Called in GameInstance"));
-
+	
 }
 
 void UPuzzlePlatformGameInstance::Host()
 {
-	UEngine* Engine = GetEngine();
-	if (!Engine)return;
-	Engine->AddOnScreenDebugMessage(0,5,FColor::Green,TEXT("Host code is called"));
+// 	UEngine* Engine = GetEngine();
+// 	if (!Engine)return;
+// 	Engine->AddOnScreenDebugMessage(0,5,FColor::Green,TEXT("Host code is called"));
 
 	UWorld* World = GetWorld();
 	if (!World)return;
 	World->ServerTravel("/Game/Simon/Level/Lv_Stage");
+	Menu->TearDown();
+	
 }
 
 void UPuzzlePlatformGameInstance::Join(const FString& Address)
@@ -48,18 +50,10 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 {
 	//create the widget
 	if (!MainMenuBP)return;
-	UUserWidget* Menu = CreateWidget(this, MainMenuBP);
-	//add the widget to the screen
+	Menu = CreateWidget<UMainMenu>(this, MainMenuBP);
 	if (!Menu)return;
+
 	Menu->AddToViewport();
-
-	//Setting the input mode so mouse is visible and button are focused on.
-	auto PlayerController = GetWorld()->GetFirstPlayerController();
-
-	if (!PlayerController)return;
-	FInputModeUIOnly InputModeData;
-	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);	
-	PlayerController->SetInputMode(InputModeData);
-	PlayerController->bShowMouseCursor = true;
+	Menu->SetMenuInterface(this); //GameInstance tell Menu where to get interface. (this) is used since it can mutate into an interface.
+	Menu->SetUp();
 }
