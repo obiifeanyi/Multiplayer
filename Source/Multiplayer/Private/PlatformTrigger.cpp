@@ -35,7 +35,7 @@ void APlatformTrigger::Tick(float DeltaTime)
 
 void APlatformTrigger::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//if (!ensure(MovingPlatforms.Last() != nullprt)) return;					 TODO find proper syntax for ensure
+	//if (!ensure(MovingPlatforms.Last() != nullprt)) return;	
 	
 	if (MovingPlatforms.Num() == 0) return; //If null Bait out
 	for (auto MovingPlatform:MovingPlatforms)

@@ -3,6 +3,7 @@
 #include "PuzzlePlatformGameInstance.h"
 #include "Public/Blueprint/UserWidget.h"
 #include "MenuSystem/MainMenu.h"
+#include "MenuSystem/InGameMenu.h"
 #include <Engine/Engine.h>
 
 
@@ -14,23 +15,25 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 	{
 		MainMenuBP = MainMenu.Class;
 	}
-
+	static ConstructorHelpers::FClassFinder<UInGameMenu>InGameMenu(TEXT("/Game/Simon/MainMenu/WBP_InGameMenu"));
+	if (InGameMenu.Class != NULL)
+	{
+		InGameMenuBP = InGameMenu.Class;
+		
+	}
 }
 
 void UPuzzlePlatformGameInstance::Init()
 {
-	
+
+
 }
 
 void UPuzzlePlatformGameInstance::Host()
 {
-// 	UEngine* Engine = GetEngine();
-// 	if (!Engine)return;
-// 	Engine->AddOnScreenDebugMessage(0,5,FColor::Green,TEXT("Host code is called"));
-
 	UWorld* World = GetWorld();
 	if (!World)return;
-	World->ServerTravel("/Game/Simon/Level/Lv_Stage");
+	World->ServerTravel("/Game/Simon/Level/Lv_Stage?Listen");
 	Menu->TearDown();
 	
 }
@@ -40,20 +43,37 @@ void UPuzzlePlatformGameInstance::Join(const FString& Address)
 	UEngine* Engine = GetEngine();
 	if (!Engine)return;
 	Engine->AddOnScreenDebugMessage(0, 5, FColor::Green, FString::Printf(TEXT("Host code is called %s"), *Address));
-
 	//use player controller to travel, use address input to travel
 	APlayerController* PlayerController = GetFirstLocalPlayerController();
 	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	Menu->TearDown();
 }
 
 void UPuzzlePlatformGameInstance::LoadMenu()
 {
-	//create the widget
 	if (!MainMenuBP)return;
 	Menu = CreateWidget<UMainMenu>(this, MainMenuBP);
 	if (!Menu)return;
-
-	Menu->AddToViewport();
-	Menu->SetMenuInterface(this); //GameInstance tell Menu where to get interface. (this) is used since it can mutate into an interface.
+	Menu->SetGameInstanceToMenuInterface(this);
 	Menu->SetUp();
+}
+
+void UPuzzlePlatformGameInstance::LoadInGameMenu()
+{
+	
+	InMenu = CreateWidget<UInGameMenu>(this,InGameMenuBP);
+	InMenu->SetGameInstanceToMenuInterface(this);
+	InMenu->SetUp();
+}
+
+void UPuzzlePlatformGameInstance::LoadMainMenu()
+{
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+	PlayerController->ClientTravel("/Game/Simon/Level/Lv_MainMenu", ETravelType::TRAVEL_Absolute);
+}
+
+void UPuzzlePlatformGameInstance::CloseGame()
+{
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+	PlayerController->ConsoleCommand("Exit");
 }

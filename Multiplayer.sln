@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.25807.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{A41176B5-DF82-4596-9B7E-1DA118130AD8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{49698714-6241-46D8-8ADA-B6A5F3B2776E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{D0B800A8-E8B4-4757-A45A-09E7A4E876FD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{19B6D689-3222-4946-BAA4-47717EF54285}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UE4", "Intermediate\ProjectFiles\UE4.vcxproj", "{6205FCCC-411A-41F0-AC0D-31684459B40C}"
 EndProject
@@ -76,9 +76,9 @@ Global
 		{6205FCCC-411A-41F0-AC0D-31684459B40C}.Shipping|Win64.ActiveCfg = BuiltWithUnrealBuildTool|Win32
 		{6205FCCC-411A-41F0-AC0D-31684459B40C}.Shipping|Win64.Build.0 = BuiltWithUnrealBuildTool|Win32
 		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|Android.ActiveCfg = Android_DebugGame_Editor|Win32
-		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|HTML5.ActiveCfg = Android_DebugGame_Editor|Win32
-		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|Win32.ActiveCfg = Development_Editor|Win32
-		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|Win64.ActiveCfg = Android_DebugGame_Editor|Win32
+		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|HTML5.ActiveCfg = HTML5_DebugGame_Editor|Win32
+		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|Win32.ActiveCfg = DebugGame_Editor|Win32
+		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|Win64.ActiveCfg = DebugGame_Editor|x64
 		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame Editor|Win64.Build.0 = DebugGame_Editor|x64
 		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame|Android.ActiveCfg = Android_DebugGame_Game|Win32
 		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6}.DebugGame|Android.Build.0 = Android_DebugGame_Game|Win32
@@ -114,10 +114,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6205FCCC-411A-41F0-AC0D-31684459B40C} = {A41176B5-DF82-4596-9B7E-1DA118130AD8}
-		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6} = {D0B800A8-E8B4-4757-A45A-09E7A4E876FD}
+		{6205FCCC-411A-41F0-AC0D-31684459B40C} = {49698714-6241-46D8-8ADA-B6A5F3B2776E}
+		{024AD44E-DCB4-41E5-8F0C-8F6FDD8F19F6} = {19B6D689-3222-4946-BAA4-47717EF54285}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {AC7EDC82-5E16-49FF-A319-EB4AADA0147A}
+		SolutionGuid = {C34651E4-C5AE-4CA9-BC77-7F8EC519F728}
 	EndGlobalSection
 EndGlobal

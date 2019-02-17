@@ -20,8 +20,10 @@ private:
 	virtual void Init() override;
 	
 	TSubclassOf<class UMainMenu> MainMenuBP;
+	TSubclassOf<class UInGameMenu> InGameMenuBP;
 
 	UMainMenu* Menu;
+	UInGameMenu* InMenu; //Should this be a global property.
 
 public:
 
@@ -29,12 +31,18 @@ public:
 		void Host() override;
 
 	UFUNCTION(Exec)
-		void Join(const FString& Address);
+		void Join(const FString& Address) override;
 
 	UFUNCTION(BlueprintCallable)
 		void LoadMenu();
 
+	UFUNCTION(BlueprintCallable)
+		void LoadInGameMenu();
 
+		void LoadMainMenu();
+
+	UFUNCTION(Exec)
+		void CloseGame() override; //Exit the whole game.
 	
 	
 };

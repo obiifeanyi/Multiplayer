@@ -2,49 +2,50 @@
 
 #include "MainMenu.h"
 #include "Components/Button.h"
+#include "Components/WidgetSwitcher.h"
+#include "Components/EditableTextBox.h"
+
 
 bool UMainMenu::Initialize()
 {
 	bool Init = Super::Initialize();
 	if (!Init) return false;
-	if (!Host) return false;
-	Host->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
+	if (!HostButton) return false;
+	HostButton->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
+	JoinButton->OnClicked.AddDynamic(this, &UMainMenu::OpenJoinMenu);
+	BackToMainMenuButton->OnClicked.AddDynamic(this, &UMainMenu::BackToMainMenu);
+	JoinConfirmButton->OnClicked.AddDynamic(this, &UMainMenu::JoinServer);
+
 	return true;
+}
+
+//Press join button opens Join Menu
+void UMainMenu::OpenJoinMenu()
+{
+	//UE_LOG(LogTemp,Warning,TEXT("Clicking Button"))
+	SwitchMenus->SetActiveWidget(IP_Login);
+}
+
+void UMainMenu::BackToMainMenu()
+{
+	//UE_LOG(LogTemp,Warning,TEXT("Clicking Button"))
+	SwitchMenus->SetActiveWidget(MainMenu);
+}
+
+void UMainMenu::JoinServer()
+{
+	const FString Address = IpInput->GetText().ToString();
+
+	if (GameInstanceToMenu != nullptr)
+	{
+		GameInstanceToMenu->Join(Address);
+	}
 }
 
 void UMainMenu::HostServer()
 {
-	if (MenuInterface != nullptr)
+	if (GameInstanceToMenu != nullptr)
 	{
-		MenuInterface->Host();
+		GameInstanceToMenu->Host();
 	}
-}
-
-void UMainMenu::SetMenuInterface(IMenuInterface* MenuInterface)
-{
-	this->MenuInterface = MenuInterface;
-}
-
-void UMainMenu::SetUp()
-{
-	//Setting the input mode so mouse is visible and button are focused on.
-		auto PlayerController = GetWorld()->GetFirstPlayerController();
-		if (!PlayerController)return;
-		FInputModeUIOnly InputModeData;
-		//InputModeData.SetWidgetToFocus(Menu->TakeWidget());
-		InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-		PlayerController->SetInputMode(InputModeData);
-		PlayerController->bShowMouseCursor = true;
-}
-
-
-void UMainMenu::TearDown()
-{
-//Setting the input mode player can move around
-	auto PlayerController = GetWorld()->GetFirstPlayerController();
-	if (!PlayerController)return;
-	FInputModeGameOnly InputModeData;
-	InputModeData.SetConsumeCaptureMouseDown(true);
-	PlayerController->SetInputMode(InputModeData);
-	PlayerController->bShowMouseCursor = false;
 }
