@@ -4,6 +4,7 @@
 #include "Public/Blueprint/UserWidget.h"
 #include "MenuSystem/MainMenu.h"
 #include "MenuSystem/InGameMenu.h"
+#include "OnlineSubsystem.h"
 #include <Engine/Engine.h>
 
 
@@ -25,8 +26,20 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 
 void UPuzzlePlatformGameInstance::Init()
 {
-
-
+	IOnlineSubsystem* SubSystem = IOnlineSubsystem::Get();
+	if (ensure(SubSystem != nullptr))
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Online SubSystem found %s"), *SubSystem->GetSubsystemName().ToString());
+		IOnlineSessionPtr SessionInterface = SubSystem->GetSessionInterface();
+		if(SessionInterface.IsValid())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Session was found"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Online SubSystem not found"));
+	}
 }
 
 void UPuzzlePlatformGameInstance::Host()
@@ -49,7 +62,7 @@ void UPuzzlePlatformGameInstance::Join(const FString& Address)
 	Menu->TearDown();
 }
 
-void UPuzzlePlatformGameInstance::LoadMenu()
+void UPuzzlePlatformGameInstance::LoadMenuWidget()
 {
 	if (!MainMenuBP)return;
 	Menu = CreateWidget<UMainMenu>(this, MainMenuBP);
