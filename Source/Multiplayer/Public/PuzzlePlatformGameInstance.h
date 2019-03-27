@@ -45,7 +45,7 @@ public:
 		void LoadInGameMenu();
 
 	UFUNCTION(Exec)
-		void CloseGame() override; //Exit the whole game.
+		void CloseGame() override;
 	
 	void LoadMainMenu();
 

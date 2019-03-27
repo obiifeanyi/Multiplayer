@@ -27,6 +27,7 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 	}
 }
 
+
 void UPuzzlePlatformGameInstance::Init()
 {
 	IOnlineSubsystem* SubSystem = IOnlineSubsystem::Get();
@@ -50,8 +51,7 @@ void UPuzzlePlatformGameInstance::Init()
 			if (SessionSearch.IsValid())
 			{
 				SessionSearch->bIsLanQuery = true;
- 				//SessionInterface->FindSessions(0,SessionSearch.ToSharedRef());
-				auto FoundSession = SessionSearch->SearchResults[0].Session.OwningUserName;
+				SessionInterface->FindSessions(0,SessionSearch.ToSharedRef());
 			}
 		}
 	}
@@ -60,6 +60,7 @@ void UPuzzlePlatformGameInstance::Init()
 		UE_LOG(LogTemp, Warning, TEXT("Online SubSystem not found"));
 	}
 }
+
 
 
 //On Find Session
