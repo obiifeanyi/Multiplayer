@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "MenuSystem/MenuInterface.h"
+#include "OnlineSessionInterface.h"
 #include "PuzzlePlatformGameInstance.generated.h"
 
 /**
@@ -16,6 +17,7 @@ class MULTIPLAYER_API UPuzzlePlatformGameInstance : public UGameInstance, public
 	GENERATED_BODY()
 	
 private:
+
 	UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer);
 	virtual void Init() override;
 	
@@ -24,6 +26,9 @@ private:
 
 	UMainMenu* Menu;
 	UInGameMenu* InMenu; //Should this be a global property.
+
+	IOnlineSessionPtr SessionInterface;
+	TSharedPtr<class FOnlineSessionSearch> SessionSearch;
 
 public:
 
@@ -39,10 +44,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void LoadInGameMenu();
 
-		void LoadMainMenu();
-
 	UFUNCTION(Exec)
 		void CloseGame() override; //Exit the whole game.
 	
+	void LoadMainMenu();
+
+	void Create_A_Session();
+	void OnCreateSessionComplete(FName SessionName, bool Successful);
+	void OnDestroySessionComplete(FName SessionName, bool Successful);
+	void OnFindSessionComplete(bool bWasSuccessful);
 	
 };
