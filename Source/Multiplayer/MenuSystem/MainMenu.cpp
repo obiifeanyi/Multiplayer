@@ -5,6 +5,19 @@
 #include "Components/WidgetSwitcher.h"
 #include "Components/EditableTextBox.h"
 
+#include "ServerRow.h"
+#include <ConstructorHelpers.h>
+
+
+UMainMenu::UMainMenu(const FObjectInitializer & ObjectInitializer)
+{
+	static ConstructorHelpers::FClassFinder<UUserWidget> ServerRowBPClass(TEXT("/Game/Simon/MainMenu/WBP_ServerRow"));
+	if(ServerRowBPClass.Class != NULL)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Hello world"))
+		ServerRowClass = ServerRowBPClass.Class;
+	}
+}
 
 bool UMainMenu::Initialize()
 {
@@ -34,11 +47,16 @@ void UMainMenu::BackToMainMenu()
 
 void UMainMenu::JoinServer()
 {
-	const FString Address = IpInput->GetText().ToString();
-
+	
 	if (GameInstanceToMenu != nullptr)
 	{
-		GameInstanceToMenu->Join(Address);
+		UWorld* World = this->GetWorld();
+		if(!ensure(World != nullptr))return;
+
+		UServerRow* Row = CreateWidget<UServerRow>(this, ServerRowClass);
+		if(!ensure (Row != nullptr))return;
+
+		ServerList->AddChild(Row);
 	}
 }
 

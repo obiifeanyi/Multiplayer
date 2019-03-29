@@ -5,6 +5,7 @@
 #include <Engine/Engine.h>
 #include "OnlineSubsystem.h"
 #include "OnlineSessionSettings.h"
+#include <ConstructorHelpers.h>
 
 #include "MenuSystem/MainMenu.h"
 #include "MenuSystem/InGameMenu.h"

@@ -18,8 +18,12 @@ class MULTIPLAYER_API UMainMenu : public UMenuSystem
 	virtual bool Initialize() override;
 
 	IMenuInterface* MenuInterface = nullptr;
+private:
+	TSubclassOf<class UServerRow> ServerRowClass;
 
 public:
+
+	UMainMenu(const FObjectInitializer & ObjectInitializer);
 
 	UFUNCTION()
 	void HostServer();	
@@ -49,7 +53,7 @@ protected:
 		class UWidget* IP_Login;
 
 	UPROPERTY(meta = (BindWidget))
-		class UEditableTextBox* IpInput;
+		class UPanelWidget* ServerList;
 
 	//Menu Navigation functions
 	UFUNCTION()
